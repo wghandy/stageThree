@@ -1,0 +1,5 @@
+{
+    "PORT":1905,
+    "mongoUrl":"mongodb://localhost:27017",
+    "dbName":"wgh"
+}

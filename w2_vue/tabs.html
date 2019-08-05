@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tabs切换</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h2>tabs切换</h2>
+        <div id="app">
+            <div class="tabs">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" v-for="(tab,idx) in tabs">
+                        <a class="nav-link" v-bind:class="{active:activeIdx===idx}" href="#" v-on:click="changTab(idx)">{{tab.name}}</a>
+                    </li>
+                </ul>
+                <div class="content">
+                    <div class="py-5 px-2 border" v-bind:idx="idx" v-show="activeIdx===idx" v-for="(tab,idx) in tabs">{{idx+1}}、{{tab.content}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="./src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data:{
+                tabs:[{
+                    name:'wgh',
+                    content:'1'
+                },{
+                    name:'laoXie',
+                    content:'2'
+                },{
+                    name:'ding',
+                    content:'3'
+                }],
+                activeIdx:0
+            },
+            methods:{
+                changTab(idx){
+                    this.activeIdx = idx;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+	<!--本地引入-->
+	<script src="./js/axios.js"></script>
+	<title>Webpack</title>
+</head>
+
+<body>
+	<div id="app"></div>
+	<script>
+
+		// axios.get('https://www.easy-mock.com/mock/5d21f8e7e321e27b349d91d7/example/lists').then(function (response) {
+		// 	console.log(response);
+		// }).catch(function (error) {
+		// 	console.log(error)
+		// });
+
+		var CancelToken = axios.CancelToken;
+		var source = CancelToken.source();
+
+		axios.get('https://www.easy-mock.com/mock/5d21f8e7e321e27b349d91d7/example/lists', {
+			cancelToken: source.toke
+		}).catch(function (thrown) {
+			console.log(thrown);
+			if (axios.isCancel(thrown)) {
+				console.log('Rquest canceled', thrown.message);
+			} else {
+				//handle error
+			}
+		});
+
+		//取消请求(信息参数设可设置的)
+		source.cancel("操作被用户取消");
+	</script>
+</body>
+
+</html>

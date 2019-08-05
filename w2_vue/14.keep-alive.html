@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>14keep-alive</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h2>14keep-alive</h2>
+        <div id="app">
+            <ul class="nav nav-tabs"> 
+                <li class="nav-item" v-for="item in navs" @click="changeNav(item.name)">
+                    <a class="nav-link" href="#" :class="{active:item.name.toLowerCase() == active}">{{item.title}}</a>
+                </li>
+            </ul>
+            <keep-alive exclude="discover">
+                <!-- include代表之保持这个缓存
+                     exclude代表除了这个以为都保持缓存 -->
+                <component :is="active"/>
+            </keep-alive>
+        </div>
+    </div>
+
+    <script src="./src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data: {
+                navs: [{
+                    title: '首页',
+                    name: 'Home',
+                    path: '/home'
+                }, {
+                    title: '发现',
+                    name: 'Discover',
+                    path: '/discover'
+                }, {
+                    title: '我的',
+                    name: 'Mine',
+                    path: '/mine'
+                }],
+                active:'home'
+            },
+            components: {
+                // home:{},
+                // discover:{},
+                // mine:{}
+            },
+            methods:{
+                changeNav(name){
+                    this.active = name.toLowerCase();
+                }
+            },
+            created(){
+                let components = {}
+                this.navs.forEach(item=>{
+                    components[item.name.toLowerCase()] = {
+                        data(){
+                            return{
+                                price:998
+                            }
+                        },
+                        template:`<div>
+                                    ${item.title} - ${item.name}
+                                    <p>价格：{{price}}</p>
+                                    <button class="btn btn-warning" @click="changePrice">修改价格</button>
+                                </div>`,
+                        methods:{
+                            changePrice(){
+                                this.price = this.price + 1
+                            }
+                        }
+                    }
+                });
+                // 后期设置Vue组件的配置参数
+                // 注意：避免直接重置$options.components，因为Vue内部内置了一些组件，如keep-alive
+                // this.$options.components = components;// keep-alive报错
+                Object.assign(this.$options.components,components);
+                // this.$options.components = {...this.$options.components,...components}
+            }
+        })
+    </script>
+</body>
+
+</html>

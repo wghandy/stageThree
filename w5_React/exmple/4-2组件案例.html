@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>4-1.组件完成案例</title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+    <script src="js/babel.min.js"></script>
+</head>
+<body>
+    <h1>4-2.组件完成案例</h1>
+    <div id="app">
+        
+    </div>
+    <script type="text/babel">
+    // 2数据放在组件中，因此需要组件通讯
+        // 顶层组件
+        class Comment extends React.Component{
+            constructor(){//初始化函数
+                super();// 等效于Parent.call(this)
+
+                // 在super之后才能使用this
+                // 类组件的状态
+                this.state = {
+                    data:[
+                        {
+                            username:'laoxie',
+                            content:'商品很好，老婆很喜欢。好评'
+                        },
+                        {
+                            username:'jingjing',
+                            content:'衣服不错，老公穿了很难看，好评'
+                        },
+                        {
+                            username:'dingding',
+                            content:'第二来了，帽子不错，顶！'
+                        }
+                    ]
+                }
+            }
+
+            render(){
+                return <div>
+                    <h4>商品评论</h4>
+                    <CommentList data={this.state.data}/>
+                </div>
+            }
+        }
+
+        // 组件li列表
+        function CommentList(props){
+            return <ul>
+                {
+                    props.data.map((item,idx)=>{
+                        return <CommentItem data={item} key={idx}/>
+                        
+                    }) 
+                }
+            </ul>
+        }
+
+        // 遍历的组件:需要组件li传递数据过来
+        function CommentItem(props){
+            // console.log("props",props);
+            return <li> 
+                <strong>{props.data.username}：</strong>
+                <div>{props.data.content}</div>
+                <CommentButton>回复</CommentButton>
+            </li> 
+        }
+
+        // 添加评论按钮组件：
+        function CommentButton(props) {//从CommentItem获取 回复这两字
+            return <button>{props.children}</button>
+        }
+
+        //评论输入框和按钮：刚开始写代码的时候不理解为啥，这个不会遍历，跟遍历毛关系都没
+        // class CommentForm extends React.Component(){
+        //     render(){
+        //         return <div>
+        //             <div><textarea></textarea></div>
+        //             <CommentButton></CommentButton>
+        //         </div>
+        //     }
+        // }
+
+        ReactDOM.render(
+            <Comment/>
+            ,
+            document.getElementById('app')
+        )
+    </script>
+</body>
+</html>

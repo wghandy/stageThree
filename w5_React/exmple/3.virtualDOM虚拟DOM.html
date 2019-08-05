@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>虚拟DOM及其性能优化</h1>
+    <button id="app">1</button>
+    <script>
+        // console.time('start');
+        // for(var i = 0; i < 10000; i++){
+        //     var app = document.getElementById('app');
+        //     var num = app.innerText;
+        //     app.innerText = ++num;
+        // }
+        // console.timeEnd('start');
+        console.time('start');
+        var app = document.getElementById('app');
+        var num = app.innerText;
+        for (var i = 0; i < 10000; i++) {
+            ++num;
+        }
+        app.innerText = num;
+        console.timeEnd('start');
+    </script>
+</body>
+
+</html>

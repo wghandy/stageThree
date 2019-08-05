@@ -1,0 +1,1 @@
+git pull git@github.com:gzh51904/outline.git

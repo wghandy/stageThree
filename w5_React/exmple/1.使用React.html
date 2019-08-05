@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="js/react.development.js"></script>
+    <script src="js/react-dom.development.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+
+    </div>
+    <!-- <script>
+        ReactDOM.render(
+            //内容
+            React.createElement(
+                "div",
+                {className:"container"},
+                "helle word"
+            )
+        ),
+        document.getElementById("app");  //挂载点位置写错  
+    </script> -->
+    <script>
+        ReactDOM.render(
+            //渲染的内容：创建的虚拟节点
+            React.createElement(
+                'h1',
+                {className:"container"},
+                "hello"
+            ),
+            //挂载到id="app"
+            document.getElementById('app')
+        )
+    </script>
+</body>
+</html>

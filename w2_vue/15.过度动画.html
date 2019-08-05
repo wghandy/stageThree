@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>15过度动画</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <style>
+        .v-enter{opacity: 0;width: 184px;}
+        .v-enter-to{opacity: 1;width: 300px;}
+        .v-enter-active{
+            /* transition: opacity 3s; */
+            transition: width 3s;
+        }
+
+        .v-leave{
+            /* opacity: 1; */
+            width: 300px;
+        }
+        .v-leave-to{
+            /* opacity: 0; */
+            width: 184px;
+        }
+        .v-leave-active{
+            /* transition: opacity 3s; */
+            transition: width 3s;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h2>15过度动画</h2>
+        <div id="app">
+            <p><button class="btn btn-success" @click="showHide">显示、隐藏</button></p>
+            <transition>
+                <img src="./img/g2.jpg" alt="" v-show="disPlay">
+            </transition>
+        </div>
+    </div>
+
+    <script src="./src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#app',
+            data:{
+                disPlay:true
+            },
+            methods:{
+                showHide(){
+                    this.disPlay = !this.disPlay;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

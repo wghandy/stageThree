@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>day2 todoList</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <h1>day2 todoList</h1>
+        <div id="todoList">
+            <div class="input-group mt-3">
+                <input type="text" class="form-control" v-model="name" ref="name" v-on:keyup.13="add">
+                <div class="input-group-append">
+                    <input type="date" v-model="time" class="form-control">
+                    <button class="btn btn-success" type="button" v-on:click="add">添加</button>
+                </div>
+            </div>
+            <table class="table mt-5">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">待办事项</th>
+                        <th scope="col">预期时间</th>
+                        <th scope="col">是否完成</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item,idx) in weiList">
+                        <th scope="row">{{idx+1}}</th>
+                        <td>{{item.name}}</td>
+                        <td>{{item.time}}</td>
+                        <td>{{item.done?'是':'否'}}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-primary" @click="complete(item.id)">完成</button>
+                                <button class="btn btn-outline-danger" @click="remove(item.id)">删除</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">完成事项</th>
+                        <th scope="col">完成时间</th>
+                        <th scope="col">是否完成</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(item,idx) in doneList">
+                        <th scope="row">{{idx+1}}</th>
+                        <td>{{item.name}}</td>
+                        <td>{{item.time}}</td>
+                        <td>{{item.done?'是':'否'}}</td>
+                        <td>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-primary">查看</button>
+                                <button class="btn btn-outline-danger" @click="remove(item.id)">删除</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>总共：{{list.length}}，待办：{{weiList.length}}，完成：{{doneList.length}}</div>
+        </div>
+    </div>
+    <script src="./src/vue.js"></script>
+    <script>
+        let vm = new Vue({
+            el: '#todoList',
+            data: {
+                list: [{
+                    id: Date.now(),
+                    name: '拼搏到无能为力',
+                    time: '2019-06-26',
+                    done: false
+                }, {
+                    id: Date.now(),
+                    name: '坚持到感动自己',
+                    time: '2019-06-26',
+                    done: true
+                }],
+                name:'',
+                time:''
+            },
+            //过滤数据
+            computed: {
+                doneList() {
+                    return this.list.filter(item => item.done);
+                },
+                weiList() {
+                    return this.list.filter(item => !item.done);
+                }
+            },
+            //添加
+            methods: {
+                add() {
+                    // let {name,time} = this;
+                    let data = {
+                        id: Date.now(),
+                        name: this.name,
+                        time: this.time,
+                        done: false
+                    }
+                    this.list.unshift(data);
+
+                    //清空并获得焦点
+                    this.name = '';
+                    this.$refs.name.focus();
+                },
+                // 完成
+                complete(id){
+                    this.list.forEach(item=>{
+                        if(item.id == id){
+                            item.done = true;
+                        }
+                    })
+                },
+                // 删除
+                remove(id){
+                    for(let i = 0;i < this.list.length;i++){
+                        if(this.list[i].id == id){
+                            this.list.splice(i,1);
+                            break;
+                        }
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

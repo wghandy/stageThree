@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <h1>自定义组件</h1>
+        <div id="app">
+            <goods-list></goods-list>  
+            <goods-list></goods-list>  
+            <br>
+            <lao-xie></lao-xie> 
+            <br>
+            <jingjing></jingjing>
+        </div>
+    </div>
+    <template id="list">
+        <div>
+            <h4>goodsList</h4>
+            <p>{{username}} -> {{qty}}</p>
+            <button class="btn btn-success" @click="chang">修改</button>
+        </div>
+    </template>
+    <script src="./src/vue.js"></script>
+    <script type="module">
+        Vue.component('goodsList',{
+            data:function(){
+                return{
+                    username:'laoxie',
+                    qty:1,
+                    datalist:[]
+                }
+            },
+            template:`#list`,
+            methods:{
+                chang(){
+                    this.qty = this.qty+1;
+                }
+            }
+        })
+        new Vue({
+            el:'#app',
+            components:{
+                laoXie:{
+                    data(){
+                        return {
+                            age: 18
+                        }
+                    },
+                    template:`<div><p>laoXie{{age}}</p></div>`
+                },
+                jingjing:{
+                    data(){
+                        return {
+                            age: 38
+                        }
+                    },
+                    template:`<div><p>jingjing{{age}}</p></div>`
+                }
+            }
+        })
+    </script>
+</body>
+</html>
